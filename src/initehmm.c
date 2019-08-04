@@ -52,7 +52,7 @@ nrand()
     double n = 0;
     int i;
     for (i = 0; i < 6; i++)
-	n += drand48();
+      n += (double)random()/RAND_MAX;
     return n/6+0.5;
 }
 

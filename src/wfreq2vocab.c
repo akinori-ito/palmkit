@@ -13,7 +13,6 @@ void usage()
 {
     printf("Usage : wfreq2vocab [ -top 20000 | -gt 10 ]\n");
     printf("                    [ -records 100000 ]\n");
-    printf("                    [ -verbosity 2 ]\n");
     printf("                    [ .wfreq] [.vocab]\n");
     exit(1);
 }
@@ -100,7 +99,6 @@ int
 main(int argc, char *argv[])
 {
     int records = 100000;
-    int verbosity = 2;
     int top = -1;
     int gt = -1;
     char *infile = NULL, *outfile = NULL;
@@ -122,8 +120,6 @@ main(int argc, char *argv[])
 	    }
 	    gt = atoi(nextarg(argc,argv,i++));
 	}
-	else if (!strcmp(argv[i],"-verbosity") || !strcmp(argv[i],"-v"))
-	    verbosity = atoi(nextarg(argc,argv,i++));
 	else if (!strcmp(argv[i],"-records"))
 	    records = atoi(nextarg(argc,argv,i++));
 	else if (argv[i][0] == '-')

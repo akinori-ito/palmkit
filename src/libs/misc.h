@@ -3,6 +3,11 @@
 #include "io.h"
 #include "intsize.h"
 
+uint2 htons(uint2 x);
+uint2 ntohs(uint2 x);
+uint4 htonl(uint4 x);
+uint4 ntohl(uint4 x);
+
 char *nextarg(int argc, char *argv[], int i);
 int4 read_long(FILEHANDLE f, int ascii_input);
 uint4 read_ulong(FILEHANDLE f, int ascii_input);

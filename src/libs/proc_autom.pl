@@ -10,7 +10,7 @@ sub init_state {
 sub output_state {
     my ($state,@autom) = @_;
     my ($i); 
-    print "static char ",$base,"_elem",$state,"[] = {\n  ";
+    print "static unsigned char ",$base,"_elem",$state,"[] = {\n  ";
     for ($i = 0; $i < 128; $i++) {
 	print $autom[$i],",";
 	if (($i+1)%16 == 0) {
@@ -33,11 +33,12 @@ $state = -1;
 while (<F>) {
     next if /^#/ || /^\s*$/;
     if (/^state/) {
-	chop; split;
+	chop;
+	@x = split;
 	if ($state >= 0) {
 	    output_state($state,@autom);
 	}
-	$state = $_[1];
+	$state = $x[1];
 	init_state;
     }
     else {

@@ -1,7 +1,7 @@
 # Palmkit version 1.0.32 by Akinori Ito
 
-					伊藤 彰則
-					aito@fw.ipsj.or.jp
+伊藤 彰則
+aito@fw.ipsj.or.jp
 
 1. はじめに
 

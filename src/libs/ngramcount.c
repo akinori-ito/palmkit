@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/types.h>
-#include <netinet/in.h>
 #include "libs.h"
 #include "io.h"
 #include "misc.h"

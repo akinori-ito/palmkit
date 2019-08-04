@@ -105,7 +105,6 @@ rehash_if_needed(SLMHashTable *ht)
 {
     SLMHashTableElement *oldbody;
     int oldsize,i;
-    int old_nelem;
 #ifdef DEBUG
     char buf[100];
 #endif
@@ -118,7 +117,6 @@ rehash_if_needed(SLMHashTable *ht)
     
     oldbody = ht->body;
     oldsize = ht->size;
-    old_nelem = ht->nelem;
     ht->size = next_prime(oldsize*2);
     ht->body = New_N(SLMHashTableElement,ht->size);
     memset(ht->body,0,sizeof(SLMHashTableElement)*ht->size);
@@ -160,8 +158,8 @@ fprintf(stderr,"%s 0x%x %d %d\n",(char*)key,(unsigned)key,(int)value,h);
 	    /* do not free the original ht->body[h].value; let GC do it. */
 #if 1 //def DEBUG
 	    fprintf(stderr,"Warning: (%s,%d) -> (%s,%d)\n",
-		    (char*)ht->body[h].keyptr, (int)ht->body[h].valueptr,
-		    (char*)key, (int)value);
+		    (char*)ht->body[h].keyptr, (ptr_int)ht->body[h].valueptr,
+		    (char*)key, (ptr_int)value);
 #endif
 	    ht->body[h].valueptr = value;
 	    return;

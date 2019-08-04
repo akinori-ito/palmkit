@@ -1,5 +1,5 @@
 #include <sys/types.h>
-#include <netinet/in.h>
+#include "misc.h"
 #include "idngram.h"
 #include <string.h>
 

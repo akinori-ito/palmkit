@@ -21,6 +21,10 @@ int main()
     printf("typedef long ptr_int;\n");
     printf("typedef unsigned long u_ptr_int;\n");
   }
+  else if (sizeof(char*) == sizeof(long long)) {
+    printf("typedef long long ptr_int;\n");
+    printf("typedef unsigned long long u_ptr_int;\n");
+  }
   else {/* hope it helps */
     printf("typedef int ptr_int;\n");
     printf("typedef unsigned int u_ptr_int;\n");

@@ -1,8 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <netinet/in.h>
+/* #include <netinet/in.h> */
 #include "misc.h"
+
+#define ENDIAN_UNDETERMINED 0
+#define ENDIAN_BIG 1
+#define ENDIAN_LITTLE 2
+static int Endian = ENDIAN_UNDETERMINED;
+
+uint2 swap2(uint2 x) {
+  unsigned char *p = (unsigned char*)&x;
+  unsigned char q[2];
+  q[0] = p[1];
+  q[1] = p[0];
+  return *(uint2*)q;
+}
+
+uint4 swap4(uint4 x) {
+  unsigned char *p = (unsigned char*)&x;
+  unsigned char q[4];
+  q[0] = p[3];
+  q[1] = p[2];
+  q[2] = p[1];
+  q[3] = p[0];
+  return *(uint2*)q;
+}
+
+void check_endian() {
+  uint2 x = 1;
+  unsigned char *p = &x;
+  if (p[0] == 0)
+    Endian = ENDIAN_BIG;
+  else
+    Endian = ENDIAN_LITTLE;
+}
+
+uint2 htons(uint2 x) {
+  while (1) {
+    switch (Endian) {
+    case ENDIAN_UNDETERMINED:
+      check_endian();
+      continue;
+    case ENDIAN_BIG:
+      return x;
+    case ENDIAN_LITTLE:
+      return swap2(x);
+    }
+  }
+  /* not reached */
+  return 0;
+}
+
+uint2 ntohs(uint2 x) {
+  return htons(x);
+}
+
+uint4 htonl(uint4 x) {
+  while (1) {
+    switch (Endian) {
+    case ENDIAN_UNDETERMINED:
+      check_endian();
+      continue;
+    case ENDIAN_BIG:
+      return x;
+    case ENDIAN_LITTLE:
+      return swap4(x);
+    }
+  }
+  /* not reached */
+  return 0;
+}
+
+uint4 ntohl(uint4 x) {
+  return htonl(x);
+}
+
 
 char *nextarg(int argc, char *argv[], int i)
 {

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <signal.h>
 #include <stdarg.h>
+#include <sys/types.h>
 
 #include <remove_tmp.h>
 
@@ -44,7 +45,9 @@ scavenger_cb(int sig)
 {
   DoCleanup();
   signal(sig,SIG_DFL);
+#ifdef HAS_KILL
   kill(getpid(),sig);
+#endif
 }
 
 void TrapSignalsToScavenge(int sig1, ...)
@@ -65,15 +68,33 @@ void TrapSignalsToScavenge(int sig1, ...)
 
 void TrapAllSignals()
 {
-    TrapSignalsToScavenge(SIGHUP,SIGINT,SIGQUIT,SIGILL,
-			  SIGABRT,SIGBUS,SIGFPE,SIGSEGV,
-			  SIGPIPE,SIGTERM,
+    TrapSignalsToScavenge(
+#ifdef SIGHUP
+			  SIGHUP,
+#endif
+			  SIGINT,
+#ifdef SIGQUIT
+			  SIGQUIT,
+#endif
+			  SIGILL,
+			  SIGABRT,
+#ifdef SIGBUS
+			  SIGBUS,
+#endif
+			  SIGFPE,
+			  SIGSEGV,
+#ifdef SIGPIPE
+			  SIGPIPE,
+#endif
+			  SIGTERM,
 #ifdef SIGSTKFLT
 			  SIGSTKFLT,
 #endif
 #ifdef SIGXFSZ
 			  SIGXFSZ,
 #endif
+#ifdef SIGIO
 			  SIGIO,
+#endif
 			  0);
 }

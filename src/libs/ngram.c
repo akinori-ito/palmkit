@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/types.h>
-#include <netinet/in.h>
 #include <unistd.h>
 #include "libs.h"
 #include "io.h"
@@ -343,7 +342,6 @@ SLMReadLM_binary(char *filename,int verbosity)
     int4 ngram_size[MAX_GRAM];  
     int i,j,m,n;
     int ngram_len;
-    int word_num;
     SLMNgramNode **nodes;
     SLMNgramLeaf *leaves;
     float prob,alpha;
@@ -421,7 +419,6 @@ SLMReadLM_binary(char *filename,int verbosity)
 
     /* ngram start */
     n = 1;
-    word_num = 0;
     do {
 	if (verbosity > 0) {
 	    fprintf(stderr,"%d-grams",n);
