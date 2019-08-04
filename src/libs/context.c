@@ -1,5 +1,6 @@
 #include "misc.h"
 #include "context.h"
+#include "hash.h"
 
 static u_ptr_int
 ccs_hashfunc(void *key)

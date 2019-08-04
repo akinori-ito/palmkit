@@ -157,7 +157,7 @@ fprintf(stderr,"%s 0x%x %d %d\n",(char*)key,(unsigned)key,(int)value,h);
 	    /* replace value */
 	    /* do not free the original ht->body[h].value; let GC do it. */
 #if 1 //def DEBUG
-	    fprintf(stderr,"Warning: (%s,%d) -> (%s,%d)\n",
+	    fprintf(stderr,"Warning: (%s,%ld) -> (%s,%ld)\n",
 		    (char*)ht->body[h].keyptr, (ptr_int)ht->body[h].valueptr,
 		    (char*)key, (ptr_int)value);
 #endif

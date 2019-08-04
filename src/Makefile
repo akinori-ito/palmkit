@@ -3,7 +3,7 @@ CC=gcc
 INCLUDES=-I. -I./libs
 DEFS= -DHAVE_ZLIB_H=1 -DSTDC_HEADERS=1 -DRETSIGTYPE=void -DHAVE_VPRINTF=1 -DHAVE_STRCHR=1 -DHAVE_STRSPN=1 -DENABLE_LONGID=1 
 CFLAGS=-g -Wall $(INCLUDES) $(DEFS)
-LDFLAGS=-Llibs -lslm -lm
+LDFLAGS=-Llibs -lslm -lm -ldmalloc
 SLMOBJS=hash.o inthash.o io.o misc.o
 TARGETS=text2wfreq wfreq2vocab text2idngram idngram2lm evallm \
 	mergeidngram mixidngram mergeidwfreq mixidwfreq ctext2idngram \
