@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>Palmkit reference --- SLMWord2ID ---</title>
+</head>
+<body>
+<h1>SLMContextLength</h1>
+<h2>プロトタイプ</h2>
+<pre>
+    #include &lt;slm.h&gt;
+
+    SLMWordID SLMContextLength(SLMNgram *ng);
+</pre>
+<h2>関数の解説</h2>
+言語モデルに与えるべきコンテキストの長さを返す。
+<tt>ng</tt>は言語モデルへのポインタである．この関数の返す
+値は、通常のn-gramではn-1であるが、distance bigramの
+場合は距離+1となる。
+
+<h2>参照項目</h2>
+<a href="SLMReadLM.html">SLMReadLM</a>
+</body>
+</html>

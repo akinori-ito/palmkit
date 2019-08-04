@@ -1,0 +1,41 @@
+#!/usr/local/bin/ruby
+
+def usage
+  STDERR.print "text2idtext [-verbose] -vocab .vocab [.text]\n"
+  exit 1
+end
+
+f = nil
+verbose = false
+
+while ARGV[0] =~ /^-/
+  case ARGV.shift
+  when '-vocab'
+    f = open(ARGV.shift)
+  when '-verbose'
+    verbose = true
+  else
+    usage
+  end
+end
+
+usage if f.nil?
+
+vocab = {}
+i = 1
+while f.gets
+  vocab[chop] = i
+  i += 1
+end
+f.close
+
+while gets
+  x = chop.split
+  y = x.collect{|w|
+     i = vocab[w]
+     n = if i.nil? then "0" else i.to_s; end
+     if verbose then "#{w}(#{n})" else n; end
+  }
+  print y.join(" "),"\n"
+end
+

@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Palmkit reference --- idngram2lm ---</title>
+</head>
+<body>
+<h1>idngram2lm</h1>
+<h2>コマンドの解説</h2>
+<a href="manual.html#.idngram">ID n-gram形式</a>のデータから，
+<a href="manual.html#.arpa">ARPA形式</a>
+またはバイナリ形式のback-off言語モデルを生成する．
+<h2>呼び出し形式</h2>
+<pre>
+    idngram2lm [options] -vocab file.vocab[.gz] -idngram file.idngram[.gz] -arpa outfile.arpa[.gz]
+    idngram2lm [options] -vocab file.vocab[.gz] -idngram file.idngram[.gz] -binary outfile.bin[.gz]
+</pre>
+<p>
+
+-vocab で語彙ファイルを，-idngramでID n-gram ファイルを指定する．出力される
+言語モデルファイルは，-arpa または-binaryで指定する．
+クラスモデルを生成する場合は，
+下記の-class と-idwfreqオプションが必要．
+<h2>オプション</h2>
+<dl>
+<dt>-class file.cls[.gz]
+<dd>クラスモデルを作成する場合に，<a href="manual.html#.cls">
+クラスファイル</A>を指定する．
+<dt>-idwfreq file.idwfreq[.gz]
+<dd>クラスモデルを作成する場合に，<a href="manual.html#.idwfreq">
+ID wfreq</a>ファイルを指定する．
+
+<dt>-vocab_type 0〜2 
+<dd>
+未知語を含むモデル(open vocabulary model)の場合は1，
+未知語を含まないモデル(closed vocabulary model)の場合は
+0を指定する．学習データに未知語を含まないが，入力には
+未知語を許すという場合には2を指定する．
+デフォルトは1．
+
+<dt>-oov_fraction 比率
+<dd>
+上記の -vocab_typeオプションで2を指定した場合の，
+未知語の比率を指定する．ディスカウントされた確率のうち，
+ここで指定した比率が未知語に回される．デフォルトは0.5．
+
+<dt>-linear | -absolute | -good_turing | -witten_bell | -no_discount
+<dd>
+ティスカウントの手法を指定する．各オプションに対応するディスカウント手法
+は次の通り．
+<table border="1">
+<tr><td> -linear <td> linear discounting
+<tr><td> -absolute <td> absolute discounting
+<tr><td> -good_turing <td> Good-Turing discounting
+<tr><td> -witten_bell <td> Witten-Bell discounting
+<tr><td> -no_discount <td> ディスカウントなし
+</table>
+デフォルトは Witten-Bell discountingである．
+
+<dt>-disc_ranges 回数1 回数2 回数3 ... 
+<dd>
+Good-Turing discounting を用いる場合，各n-gramで
+どこまでdiscountingをするかを指定する．デフォルトは，
+unigramが1，bigramが7，trigramが7である．
+
+<dt>-cutoffs 回数2 回数3 ...
+<dd>
+各n-gramのカットオフを指定する．「回数2」がbigramの
+カットオフ，「回数3」がtrigramのカットオフである．
+ここで指定した回数以下のn-gram countは削除される．
+デフォルトはすべて0である．
+
+<dt> -ascii_input 
+<dd>
+入力のID n-gramがテキスト形式のときに指定する．
+
+<dt> -n 長さ
+<dd>
+n-gramの長さを指定する．デフォルトは3．
+
+<dt>-d 距離
+<dd>
+distance bigramを作成する時の距離を指定する。
+-d 0 で通常のbigram と等価である。-d を指定する場合、
+同時に -n 2 を指定しなければならない。
+
+<dt>-one_unk
+<dd>
+クラスモデル作成時に，未知語を１つのシンボルとして扱う場合に
+これを指定する．
+
+<dt> -verbosity 数字
+<dd>
+実行時に，どの程度の情報を出力するかを制御する．0を指定すると，
+余計な情報の出力をしない．デフォルトは2．
+
+<dt> -discount_tweak 係数
+<dd>
+ディスカウントの値を係数倍する．
+</dl>
+
+<h2>注意事項</h2>
+idngram2lm が生成するバイナリ形式の言語モデルは，
+CMU-Cambridge SLM Toolkit のバイナリ形式言語モデル
+とは互換性がない．
+
+<h2>参照項目</h2>
+<a href="text2idngram.html">text2idngram</a>,
+<a href="ctext2idngram.html">ctext2idngram</a>
+</body>
+</html>

@@ -1,0 +1,6 @@
+#!/usr/bin/awk -f
+/^\\data\\/ {print}
+/^ngram 1=/ {print}
+/^\\1-grams:/ {print}
+/^\\2-grams:/ {print "\\end\\\n"; exit}
+/^-*[0-9]/ {print $1,$2}

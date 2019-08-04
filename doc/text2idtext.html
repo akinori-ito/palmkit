@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Palmkit reference --- text2idtext ---</title>
+</head>
+<body>
+<h1>text2idtext</h1>
+<h2>コマンドの解説</h2>
+テキストを、単語番号の系列に変換する
+<h2>呼び出し形式</h2>
+<pre>
+    text2idtext [-verbose] -vocab file.vocab file.text
+</pre>
+<h2>オプション</h2>
+<dl>
+<dt>-verbose
+<dd>単語番号のかわりに、「単語(単語番号)」という形式で出力する。
+</dl>
+<h2>注意事項</h2>
+引数には圧縮ファイルを指定することができない。圧縮ファイルを入力とする時は、
+<pre>
+    gunzip -d file.text.gz | text2idtext -vocab file.vocab | gzip > file.idtext.gz
+</pre>
+のようにする必要がある。
+</body>
+</html>

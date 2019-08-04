@@ -1,0 +1,133 @@
+1.0.32  13 November, 2009
+	ctext2idngramのいくつかのバグフィックス。
+
+1.0.31  13 January, 2006
+	SLMReadLMでファイルを閉じていなかったバグの修正。
+	(by Masaru Katoh katoh@yz.yamagata-u.ac.jp)
+	
+1.0.28	11 October, 2002
+	Rubyのpalmkitモジュールにメモリーリークがあった．
+	idngramの語彙を変換するコマンド changeidvocab を追加．
+	(ドキュメント未整備．クラスn-gram未対応)
+
+1.0.27	22 August, 2002
+	evallm の出力で OOV率、未知語の種類、補正PPを出力するようにした。
+
+1.0.26  22 August, 2002
+	lmfile.arpa;2 のような長さ指定がうまく動いていなかった(distant
+	bigram導入時のバグ)問題の修正。
+	
+1.0.25  20 August, 2002
+	bigram に対するalphaの計算順序に誤りがあった。
+	(産業技術総合研究所の秋葉さんによる)
+	出力用フォーマットの調整。
+	
+1.0.24.2  20 August, 2002
+	Makefile.in を変更。make install 時に ../bin, ../lib, ../include
+	を作成するようにする。
+	samples/sample1.c がコンパイルできなくなっていたので修正。
+	
+1.0.24  19 August, 2002
+	configure --enable-longid 新設
+	(WordID を32ビットにするオプション)
+	ハッシュ関数を改良。語彙が多い場合にすごく速くなった。
+	
+1.0.23	2 August, 2002
+	configure --enable-largefile 新設．
+	text2idngram, reverseidngram で異常終了時に一時ファイルを削除
+	するようにした．
+	
+1.0.21 -> 1.0.22  29 July, 2002
+	SLMReadIDNgram()中のfixNgramNode()の引数が誤っていたバグの修正．
+	(産業技術総合研究所の秋葉さんによる)
+	クラスモデルを作成するときに，クラス出現数が0の場合，そのクラス
+	番号に相当する「単語」をエラーメッセージとして出現していたバグ
+	の修正．
+
+1.0.20 -> 1.0.21  10 June 2002
+	カットオフしたときにunigram確率が正しく求まらないバグの修正．
+	出現頻度0のクラスからの単語の出現確率が一様分布になるように修正．
+
+1.0.19 -> 1.0.20  3 June 2002
+	n-gramカウントの変数を unsigned long に変更．
+
+17 Jan. 2002
+	configure を導入。
+
+1.0.18 -> 1.0.19  3 Jan. 2002
+	\r の入ったテキストファイルから z_getshort や z_getlong
+	で値が読めないバグの修正。
+	
+1.0.17 -> 1.0.18  21 Dec. 2001
+	distance bigram をサポート。
+
+1.0.16 -> 1.0.17 
+	evallm で言語モデルの混合がうまくできなくなっていた
+	バグの修正。
+
+1.0.15 -> 1.0.16  29 Oct., 2001
+	idngram2lmでクラスモデルを作成する時にコアダンプ
+	するバグの修正。
+
+1.0.14 -> 1.0.15  04 Sep., 2001
+	ngram2mgram, reverseidngram, reverseword を追加。
+	ドキュメントの整備。
+
+1.0.13 -> 1.0.14  24 Aug., 2001
+	Solaris2 の場合にtext2wfreqがうまく動かないバグの
+	修正。
+	cutoffを指定するとidngram2lm が動かないバグの修正。
+
+1.0.12 -> 1.0.13 
+	evallm を引数なしで起動するとコアダンプするバグの
+	修正。
+
+1.0.11 -> 1.0.12 25 Jul., 2001
+	Alphaに対応。
+	SLMGetBOProb() の status の内容をちょっと変更。
+	今までは 3-gram が hit したときは status.hit[2]
+	が SLM_STAT_HIT で status.hit[0],[1]は SLM_STAT_BO
+	だったが、今後はすべて SLM_STAT_HIT になる。
+	この変更にともない、evallmを修正。
+
+1.0.10 -> 1.0.11 18 Jul., 2001
+	Ruby拡張モジュールに status メソッドを追加。
+	binary形式の読み込みにバグがあった。
+
+1.0.9 -> 1.0.10 14 Jul.,2001
+	idngram2lmで、4gram以上のn-gramが作れなくなっていたバグ
+	の修正。
+
+1.0.8 -> 1.0.9  23 May, 2001
+	wfreq2vocab で，wfreq の単語数が多い場合に結果が不正に
+	なるバグの修正．
+
+1.0.7 -> 1.0.8  23 May, 2001
+	rubyの拡張モジュールを追加。
+	HP-UX で、netinet/in.h の前に sys/types.h が必要だった。
+	Alpha に多少対応した。
+	bigram モデル作成時にコアダンプすることがあるバグの修正。
+
+1.0.6 -> 1.0.7  23 Feb., 2001
+	圧縮ファイルの読込みで，gzipをパイプでつなぐ方法だけで
+	なく，zlibを使って直接圧縮ファイルを読むこともできるよう
+	にした．（しかし予想外に読込みが遅かったので，あまり使い
+	ものにならないかもしれない）
+	独自バイナリ形式による書き出し／読込みを追加．
+
+1.0.5 -> 1.0.6  16 Feb., 2001
+	idngram2lm で，言語モデル読込み中にはメモりを動的に確保
+	しないよう改良．メモリ使用量が激減した．
+
+1.0.4 -> 1.0.5  13 Feb., 2001
+	mergeidngram の重みバッファ確保部分にバグ．trigramの場合，
+	4つ以上のファイルを同時にマージすると重みが発狂する．
+
+1.0.2 -> 1.0.3
+	linear discounting のディスカウント係数の計算が間違っていた．
+
+1.0.3 -> 1.0.4  9 Feb., 2001
+	idngram2lm にメモリリークがあったのを修正．
+	idngram2lm のメモリ消費を抑えるため，NgramNode 構造体を変更．
+	NgramNodeArray, NgramLeafArray を使わないようにした．
+

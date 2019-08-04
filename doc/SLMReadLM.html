@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Palmkit reference --- SLMReadLM ---</title>
+</head>
+<body>
+<h1>SLMReadLM</h1>
+<h2>プロトタイプ</h2>
+<pre>
+    #include &lt;slm.h&gt;
+
+    SLMNgram *SLMReadLM(char *lmspec, int format, int verbosity)
+</pre>
+<h2>関数の解説</h2>
+言語モデルを読み込む．<tt>lmspec</tt>は言語モデルのファイル指定で，
+単独のファイル名の他，複数のファイルの組み合わせ指定が
+可能である(<a href="evallm.html">evallm</a>
+を参照)．<tt>format</tt>としては，次のものが指定できる．
+<pre>
+    SLM_LM_ARPA       ARPA形式
+    SLM_LM_BINARY     バイナリ形式
+</pre>
+<tt>verbosity</tt>は実行時にどの程度の情報を
+出力するかを指定するもので，0の場合には全く情報を出力しない．
+<p>
+SLMReadLM()は，SLMNgram型のデータをmalloc()によって確保し，
+そのデータ領域へのポインタを返す．
+<h2>参照項目</h2>
+<a href="evallm.html">evallm</a>,<a href="SLMFreeLM.html">SLMFreeLM</a>,
+<a href="SLMGetBOProb.html">SLMGetBOProb</a>
+</body>
+</html>

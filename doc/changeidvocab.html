@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Palmkit reference --- changeidvocab ---</title>
+</head>
+<body>
+<h1>changeidvocab</h1>
+<h2>コマンドの解説</h2>
+<a href="manual.html#.idngram">ID n-gram形式</a>のデータ
+の語彙を変更する．<p>
+ある語彙Vで作成したID n-gramデータをDとする．また，
+語彙Vのサブセットであるような語彙V'を考えたとき，元のテキストデータ
+からV'によって作成したID n-gramをD'とする．changeidvocabは，
+DからD'を生成するプログラムである．
+<h2>呼び出し形式</h2>
+<pre>
+    changeidvocab [options] -from_vocab v1.vocab -to_vocab v2.vocab [in.idngram[.gz]] [out.idngram[.gz]]
+</pre>
+<h2>オプション</h2>
+<dl>
+<dt>-from_vocab v1.vocab
+<dd>入力のidngramの語彙ファイルを指定する．
+
+<dt>-to_vocab v2.vocab
+<dd>出力のidngramの語彙ファイルを指定する．v2.vocabに含まれる単語は，すべて
+v1.vocabにも含まれていなければならない．
+
+<dt>-buffer バッファサイズ(MB)
+<dd>
+入力のソートに使うメモリサイズを指定する．デフォルトの値はコンパイル
+時に指定するが，そのままコンパイルすると100MBに設定される．
+
+<dt>-hash サイズ
+<dd>集計に用いるハッシュ表の最初の大きさを指定する．デフォルトは20000．
+
+<dt>-temp ディレクトリ
+<dd>
+ソートのための一時ファイルを置くディレクトリを指定する．
+
+<dt>-n 長さ
+<dd>
+生成されるn-gramの長さを指定する．デフォルトは3．
+
+<dt>-ascii_input
+<dd>入力をテキスト形式にする．
+
+<dt>-ascii_output
+<dd>
+出力をテキスト形式にする．
+
+<dt>-verbosity 数字
+<dd>
+実行時に，どの程度の情報を出力するかを制御する．0を指定すると，
+余計な情報の出力をしない．デフォルトは2．
+</dl>
+<h2>参照項目</h2>
+<a href="text2idngram">text2idngram</a>
+</body>
+</html>

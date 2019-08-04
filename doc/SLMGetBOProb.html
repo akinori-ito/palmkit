@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Palmkit reference --- SLMGetBOProb ---</title>
+</head>
+<body>
+<h1>SLMGetBOProb</h1>
+<h2>プロトタイプ</h2>
+<pre>
+    #include &lt;slm.h&gt;
+
+    double SLMGetBOProb(SLMNgram *ng, int len, SLMWordID *idarray, SLMBOStatus *status);
+</pre>
+<h2>関数の解説</h2>
+言語モデルを使って，N-gramの確率を計算する．<tt>ng</tt>は言語モデルへの
+ポインタ，<tt>len</tt>は言語モデルの長さ(trigramの場合は3)，
+<tt>idarray</tt>は単語番号の配列，<tt>status</tt>はn-gramの計算状況を
+示すデータである．
+<p>
+SLMBOStatus型のデータは，次のように定義されている．
+<pre>
+
+    typedef struct {
+        unsigned char len;  /* 評価した n-gram の長さ */
+        char hit[MAX_GRAM]; /* ヒット状況 */
+        float ng_prob;      /* 単語の場合 P(w|w')，クラスの場合 P(c|c') */
+        float ug_prob;      /* クラスの場合 P(w|c) */
+   } SLMBOStatus;
+
+</pre>
+<tt>len</tt>は評価されたn-gramの長さである．SLMGetBOProb()
+では，与えた単語の組の長さよりも
+短い言語モデルを利用することが可能であるが（例えば，長さ3の<tt>idarray</tt>
+をbigramモデルで評価することができる），この時には実際に計算された
+長さが<tt>len</tt>に格納される．hitはn-gramのヒット状況を
+示す配列であり，この中には次の値のいずれかが格納される．
+<table border="1">
+<tr><td><tt>SLM_STAT_HIT</tt><td>その長さのn-gramが存在した
+<tr><td><tt>SLM_STAT_BO_WITH_ALPHA</tt><td>
+その長さのn-gramが存在せず，back-offによって短いn-gramから確率を計算した
+<tr><td><tt>SLM_STAT_BO</tt><td>
+その長さのn-gramは利用されなかった
+</table>
+<tt>ng_prob</tt>には，単語n-gramの場合にはその確率そのものが格納され，
+クラスn-gramの場合にはクラスの連鎖確率が格納される．
+<tt>ug_prob</tt>はクラスn-gramの場合だけ意味をもつ．このとき，
+<tt>ug_prob</tt>にはクラスから単語が生成される確率が格納される．
+
+<h2>参照項目</h2>
+<a href="evallm.html">evallm</a>，
+<a href="SLMReadLM.html">SLMReadLM</a>
+</body>
+</html>

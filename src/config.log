@@ -1,0 +1,71 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:537: checking for gcc
+configure:650: checking whether the C compiler (gcc  ) works
+configure:666: gcc -o conftest    conftest.c  1>&5
+configure:692: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:697: checking whether we are using GNU C
+configure:706: gcc -E conftest.c
+configure:725: checking whether gcc accepts -g
+configure:757: checking whether make sets ${MAKE}
+configure:786: checking for ranlib
+configure:815: checking how to run the C preprocessor
+configure:836: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:898: checking for zlib.h
+configure:908: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:936: checking for working const
+configure:990: gcc -c -g -O2  conftest.c 1>&5
+configure:1011: checking for ANSI C header files
+configure:1024: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1091: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1086:67: warning: incompatible implicit declaration of built-in function 'exit'
+ if (XOR (islower (i), ISLOWER (i)) || toupper (i) != TOUPPER (i)) exit(2);
+                                                                   ^
+configure:1115: checking for size_t
+configure:1148: checking return type of signal handlers
+configure:1170: gcc -c -g -O2  conftest.c 1>&5
+configure:1190: checking for vprintf
+configure:1218: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1202:6: warning: conflicting types for built-in function 'vprintf'
+ char vprintf();
+      ^
+configure:1297: checking for strchr
+configure:1325: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1309:6: warning: conflicting types for built-in function 'strchr'
+ char $ac_func();
+      ^
+configure:1297: checking for strspn
+configure:1325: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1309:6: warning: conflicting types for built-in function 'strspn'
+ char $ac_func();
+      ^
+configure:1297: checking for regcomp
+configure:1325: gcc -o conftest -g -O2   conftest.c  1>&5
+C:\Users\user\AppData\Local\Temp\ccqsOFmx.o: In function `main':
+C:\Users\user\source\palmkit\palmkit-1.0.32\src/configure:1319: undefined reference to `regcomp'
+collect2.exe: error: ld returned 1 exit status
+configure: failed program was:
+#line 1302 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char regcomp(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char regcomp();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_regcomp) || defined (__stub___regcomp)
+choke me
+#else
+regcomp();
+#endif
+
+; return 0; }

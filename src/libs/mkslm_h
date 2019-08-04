@@ -1,0 +1,38 @@
+#!/bin/sh
+
+FILES=
+LONGID=
+for i
+  do
+  case $i in
+      -DENABLE_LONGID=1)
+	  LONGID=1
+	  ;;
+      -D*)
+	  ;;
+      *)
+	  FILES="$FILES $i"
+	  ;;
+  esac
+done
+
+cat << EOH
+#ifndef SLM_H
+#define SLM_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+EOH
+if [ "$LONGID" ]; then
+    echo "#define ENABLE_LONGID 1"
+fi
+awk '/\#include *\"/{next}{print}' $FILES
+cat << EOH
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* SLM_H */
+EOH

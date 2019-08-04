@@ -1,0 +1,64 @@
+Palmkit Ruby API
+					伊藤 彰則
+					aito@fw.ipsj.or.jp
+
+1. はじめに
+これは、palmkitで作成した言語モデルをRubyから利用するための
+拡張モジュールです。これを使えば、N-gramを利用するプログラムを
+Rubyで簡単に作ることが出来ます。
+
+2. インストール
+
+次の要領でインストールしてください。
+
+	ruby extconf.rb
+	make
+	make install     <--- これを実行するにはroot権限が必要かもしれません
+
+3. 提供されるもの
+
+次のクラス/メソッドが提供されます。
+
+クラス： Ngram
+クラスメソッド：
+	new(LM_filename, format)
+		Palmkitで作成した言語モデルファイルを読み込み、Ngram
+		オブジェクトを生成します。LM_filenameは言語モデルの
+		ファイル名で、evallmコマンドと同様の言語モデル組合せ
+		が利用できます。format は言語モデルのファイル形式で、
+		次のどちらかを指定します。
+
+			"SLM_LM_ARPA" : ARPA形式
+			"SLM_LM_BINARY" : バイナリ形式
+
+メソッド：
+	to_id(word)
+		文字列 word を単語番号に変換します。
+
+	to_word(id)
+		単語番号 id を単語の文字列に変換します。
+
+	prob(array)
+		単語または単語番号の配列から、その単語列のN-gram確率
+		を計算して返します。
+
+	status
+		最後に計算した確率の計算状況を返します。返値は２つの
+		要素から成る配列です。最初の要素は、各長さの N-gram
+		がヒットしたかどうかの状況を表す配列です。２つめは、
+		クラス N-gram におけるクラスの連鎖確率です。単語 N-gram
+		の場合は、最後に返された確率と同じものです。３つめは、
+		クラス N-gram における単語の出力確率です。
+
+	length
+	n
+		モデルの長さを返します。
+
+	context_length
+		コンテキストの長さを返します。通常の N-gram では
+		length-1 です。距離が D のdistant bigramの場合は、
+		length=2, context_length=D+1 になります。
+
+	vocab_size
+		語彙サイズを返します。
+

@@ -1,0 +1,348 @@
+<html>
+<head>
+<title>統計的言語モデルツールキットpalmkitマニュアル</title>
+</head>
+<body>
+<h1>統計的言語モデルツールキットpalmkitマニュアル</h1>
+<div align="right">
+<table>
+<tr><td>
+伊藤 彰則<br>
+山形大学 工学部<br>
+aito@eie.yz.yamagata-u.ac.jp<br>
+</table>
+</div>
+
+<h2>はじめに</h2>
+
+palmkit(Publicly Available Language Modelling toolKIT)
+は、N-gram 言語モデル作成のためのプログラム群である．このツールキットは，
+<ul>
+<li> 多くのコマンド群からなる
+<li> コマンドレベルでCMU-Cambridge SLM toolkitと互換性がある
+<li> 任意のNについてのN-gramモデルのサポート
+<li> 各種のback-off 
+<li> クラスモデルが作成可能
+</ul>
+という特徴を持つ．
+このツールキットを使うことで，以下のような作業を簡単に行なうことができる．
+<ul>
+<li> 単語頻度リストの作成
+<li> 語彙リストの作成
+<li> back-off N-gram言語モデルの作成
+<li> back-off N-gram言語モデルの評価
+</ul>
+
+また，このツールキットは，目的を問わず無料で利用・配布することができる．
+
+<h2>ファイル形式</h2>
+
+palmkitでは，以下のようなファイルを扱う．
+
+<ul>
+<a name=".text"></a>
+<li>.text<br>
+統計の元となる文であり，単語が空白(半角)で区切られていることを仮定している．
+例えば
+<table border="1" width="100%">
+<tr><td>
+<pre>
+我輩 は 猫 であ る 。
+名前 は まだ な い 。
+</pre>
+</table>
+のような形式である．クラスモデルを作成する場合は、
+単語にクラス名をつけたものを一つの「単語」として扱う。例えば
+<table border="1" width="100%">
+<tr><td>
+<pre>
+我輩+名詞 は+助詞 猫+名詞 であ+助動詞 る+語尾 。+記号
+名前+名詞 は+助詞 まだ+副詞 な+形容詞 い+語尾 。+記号
+</pre>
+</table>
+単語とクラス名の間には、デリミタと呼ばれる文字(上の例では +)
+を挟む。デリミタはデフォルトでは+だが、オプションにより任意に
+指定することができる。
+<p>
+文脈情報(コンテキストキュー)として，
+&lt;s&gt;(文頭)，&lt;/s&gt;(文末)，&lt;p&gt;(パラグラフ)
+のような特殊記号を使うこともできる．これらの記号は，
+自分で定義することが可能である(後述の .ccsファイル参照)．
+
+<a name=".wfreq"></a>
+<li> .wfreq<br>
+単語とその出現頻度の組である．1行に1つの単語の情報が入る．
+例えば次のようなものである．
+<table border="1" width="100%">
+<tr><td>
+<pre>
+アドバンスト 1
+衛星通信 17
+相談所 9
+現象 390
+現職 97
+現場 569
+...
+</pre>
+</table>
+
+<a name=".vocab"></a>
+<li> .vocab<br>
+語彙リスト．1行に1つの単語が記述され，単語の文字コード順に
+ソートされる．行の先頭が ##の行は
+コメントとみなされる．例えば次のようなものである．
+<table border="1" width="100%">
+<tr><td>
+<pre>
+
+、
+。
+，
+．
+・
+：
+？
+！
+〃
+々
+〇
+</pre>
+</table>
+
+<a name=".cls"></a>
+<li> .cls<br>
+クラスリスト。1行に1つのクラス名が記述される。形式は語彙リストと
+同じ。
+
+<li> .idngram (id2gram, id3gram, ...)<br>
+
+N-gram countのファイル．通常はバイナリ形式だが，テキスト形式で出力
+することもできる．各単語は単語番号に置きかえられ，未知語は 0 に
+置きかえられる．
+
+<a name=".idwfreq"></a>
+<li> .idwfreq<br>
+
+単語番号に置き換えられた単語の所属クラスと、その頻度のファイル。
+クラスモデル作成に用いられる。
+通常はバイナリ形式だが，テキスト形式で出力
+することもできる．
+
+<a name=".ccs"></a>
+<li> .ccs<br>
+
+コンテキストキュー(&lt;s&gt; や &lt;p&gt; など)を記述する．
+ここで指定された記号は，コンテキストとしては使われるが，
+言語モデルの予測には使われなくなる．
+
+<a name=".arpa"></a>
+<li> .arpa<br>
+
+作成された言語モデル(ARPA形式，テキストファイル)．
+
+<a name=".binlm"></a>
+<li>.binlm<br>
+作成された言語モデル(バイナリ形式)．
+Palmkit独自形式であり，
+CMU-Cambridge SLM toolkit のバイナリ形式はサポートしていない。
+ARPA形式よりも小さく，読み込みも速い．
+</ul>
+
+
+<h2>言語モデルの作成の作成と評価</h2>
+<h3>単語N-gramの作成</h3>
+
+<center>
+<img src="tk-diagram.png" alt="言語モデル作成手順"><br>
+単語N-gram作成手順
+</center>
+
+言語モデル作成の一般的な手順を図に示す．
+これは，次のような手順からなる．
+
+<ol>
+<li> 学習テキストから単語頻度リストを作る．<br>
+これには，<a href="text2wfreq.html">text2wfreq</a>コマンドを使う．例えば，
+<pre>
+      text2wfreq learn.text learn.wfreq
+</pre>
+のようにする．入出力ファイルが拡張子 .gz をもっていれば、
+自動的に圧縮ファイルとみなして gzip により伸長・圧縮する。
+入出力ファイルを引数に指定しなければ、.textファイルを標準入力、
+.wfreqファイルを 標準出力に割りあてる（CMU-Cambridge SLM toolkit互換）ので、
+<pre>
+      text2wfreq &lt; learn.text &gt; learn.wfreq
+</pre>
+のように使うことができる。
+
+<li> 単語頻度リストから語彙リストを作る．<br>
+
+単語頻度リストの上位n個，または頻度m回以上の単語を語彙とする．
+これには，<a href="wfreq2vocab.html">
+wfreq2vocab</a>コマンドを使う．例えば頻度の上位5000個
+を語彙とする場合には，
+<pre>
+      wfreq2vocab -top 5000 learn.wfreq learn.vocab5k
+</pre>
+のようにする．結果のファイルの拡張子( .vocab5k)は，5000語彙の
+リストという意味だが，特にこういう形式でなければならないということは
+なく，適当に付けてもよい．
+
+上位n個という指定ではなく，例えば30回以上出現した単語を語彙とする
+場合には，
+<pre>
+      wfreq2vocab -gt 29 learn.wfreq learn.vocab5k
+</pre>
+とする(gt は grater than の略)．
+<p>
+入出力ファイルを引数に指定しなければ、.wfreqファイルを標準入力、
+.vocabファイルを 標準出力に割りあてる（CMU-Cambridge SLM toolkit互換）ので、
+<pre>
+      wfreq2vocab -top 5000 &lt; learn.wfreq &gt; learn.vocab5k
+</pre>
+のように使うことができる。
+
+<li> 学習テキストと語彙リストから ID n-gram を作る．<br>
+
+語彙が決まったら，ID n-gram を作る．これには，
+<a href="text2idngram.html">text2idngram</a>を使う．
+<pre>
+     text2idngram -vocab learn.vocab5k learn.text learn.id3gram
+</pre>
+のようにする．text2wfreqの場合と同じように，圧縮ファイルを扱う
+こともできる．
+
+<li> ID n-gram と語彙リストからback-off言語モデルを作る．<br>
+最終的に，back-off 言語モデルを作成する．これには，
+<a href="idngram2lm.html">idngram2lmコマンド</a>を使う．
+
+<pre>
+      idngram2lm -idngram learn.id3gram -vocab learn.vocab5k -arpa learn.arpa
+</pre>
+これで，back-off 言語モデルのファイル learn.arpa.gz が生成される．
+idngram2lmは，圧縮ファイルにも対応しており，
+<pre>
+      idngram2lm -idngram learn.id3gram.gz -vocab learn.vocab5k.gz -arpa learn.arpa.gz
+</pre>
+のように，圧縮したファイルを指定することもできる．
+</ol>
+
+<h3>クラスN-gramの作成</h3>
+
+<center>
+<img src="tk-diagram2.png" alt="言語モデル作成手順"><br>
+クラスN-gram作成手順
+</center>
+
+言語モデル作成の一般的な手順を図に示す．
+これは，次のような手順からなる．
+
+<ol>
+<li> 学習テキストから単語頻度リストを作る．<br>
+これには，<a href="text2wfreq.html">text2wfreq</a>コマンドを使う．例えば，
+<pre>
+      text2wfreq learn.text learn.wfreq
+</pre>
+のようにする．入出力ファイルが拡張子 .gz をもっていれば、
+自動的に圧縮ファイルとみなして gzip により伸長・圧縮する。
+入出力ファイルを引数に指定しなければ、.textファイルを標準入力、
+.wfreqファイルを 標準出力に割りあてる（CMU-Cambridge SLM toolkit互換）ので、
+<pre>
+      text2wfreq &lt; learn.text &gt; learn.wfreq
+</pre>
+のように使うことができる。
+
+<li> 単語頻度リストから語彙リストを作る．<br>
+
+単語頻度リストの上位n個，または頻度m回以上の単語を語彙とする．
+これには，<a href="wfreq2vocab.html">
+wfreq2vocab</a>コマンドを使う．例えば頻度の上位5000個
+を語彙とする場合には，
+<pre>
+      wfreq2vocab -top 5000 learn.wfreq learn.vocab5k
+</pre>
+のようにする．結果のファイルの拡張子( .vocab5k)は，5000語彙の
+リストという意味だが，特にこういう形式でなければならないということは
+なく，適当に付けてもよい．
+
+上位n個という指定ではなく，例えば30回以上出現した単語を語彙とする
+場合には，
+<pre>
+      wfreq2vocab -gt 29 learn.wfreq learn.vocab5k
+</pre>
+とする(gt は grater than の略)．
+<p>
+入出力ファイルを引数に指定しなければ、.wfreqファイルを標準入力、
+.vocabファイルを 標準出力に割りあてる（CMU-Cambridge SLM toolkit互換）ので、
+<pre>
+      wfreq2vocab -top 5000 &lt; learn.wfreq &gt; learn.vocab5k
+</pre>
+のように使うことができる．
+
+<li> クラスリストを用意する．クラスリストはあらかじめ用意しておいてもいいし，
+<a href="text2class.html">ctext2class</a>コマンドを使って生成してもよい．
+
+<li> 学習テキスト，クラスリスト，語彙リストから ID n-gram を作る．<br>
+
+これには，
+<a href="ctext2idngram.html">ctext2idngram</a>を使う．
+<pre>
+     ctext2idngram -vocab learn.vocab5k -class learn.cls -idwfreq learn.idwfreq learn.text learn.cid3gram
+</pre>
+のようにする．生成されるのは，クラス列に対するidngramと，各単語の
+出現頻度ファイルである idwfreq である．
+
+<li> back-off言語モデルを作る．<br>
+最終的に，back-off 言語モデルを作成する．これには，
+<a href="idngram2lm.html">idngram2lmコマンド</a>を使う．
+
+<pre>
+      idngram2lm -idngram learn.id3gram -vocab learn.vocab5k -class learn.cls -idwfreq learn.idwfreq -arpa learn.arpa.gz
+</pre>
+これで，back-off 言語モデルのファイル learn.arpa.gz が生成される．
+</ol>
+
+<h3>言語モデルの評価</h3>
+作成した言語モデルは，単語perplexityにより評価する．
+モデルの評価をするコマンドが<a href="evallm.html">evallm</a>である．
+例えば次のような使いかたをする．
+
+<pre>
+% <u>evallm -arpa learn.arpa -context learn.ccs</u>
+Reading LM file learn.arpa 
+1-grams:..2-grams:.....3-grams:.........
+evallm : <u>perplexity -text test.text</u>
+Number of word = 220248
+13850 OOVs and 10000 context cues are excluded from PP calculation.
+Total log prob = -1.15381e+06
+Entropy = 7.55782 (bit)
+Perplexity = 188.421
+Number of 3-grams hit = 74209 (33.69%)
+Number of 2-grams hit = 82637 (37.52%)
+Number of 1-grams hit = 63402 (28.79%)
+evallm : quit
+evallm : done.
+</pre>
+
+
+基本的な使い方としては，
+<pre>
+      evallm -arpa 言語モデル -context コンテキストキュー
+</pre>
+でevallmを起動し，evallm:のプロンプトで
+<pre>
+      perplexity -text 評価テキスト
+</pre>
+を入力する．この場合の評価テキストは，学習テキストと同じく，
+単語間を空白で区切ったテキストファイルでなければならない．
+評価テキストはコマンドラインで指定することもできる。この場合、
+<pre>
+      evallm -arpa 言語モデル -context コンテキストキュー -text 評価テキスト
+</pre>
+のように指定する。
+<p>
+言語モデルの指定の書式は、次のようである。
+<pre>
+    ファイル名[;長さ][*重み][,ファイル名[;長さ]*重み...]
+</pre>
+<p>

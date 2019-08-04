@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Palmkit reference --- wfreq2vocab ---</title>
+</head>
+<body>
+<h1>wfreq2vocab</h1>
+<h2>コマンドの解説</h2>
+<a href="manual.html#.wfreq">wfreq形式のデータ</a>から，
+<a href="manual.html#.vocab">vocab形式の語彙ファイル</a>
+を生成する．
+<h2>呼び出し形式</h2>
+<pre>
+    wfreq2vocab [-top N] [-gt m] [infile.wfreq[.gz] [outfile.vocab[.gz]]]
+</pre>
+<p>
+-topか-gtのどちらかのオプションを必ず指定する．
+-top N を指定すると，頻度順に上位N個の単語を選んで語彙とする．
+-gt m を指定すると，出現頻度がm回以上の単語を選んで語彙とする．
+infile, outfile にはgzipで圧縮されたファイルを指定しても良い．
+ファイル名を省略すると，標準入力・標準出力が割り当てられる．
+<h2>参照項目</h2>
+<a href="text2wfreq.html">text2wfreq</a>
+</body>
+</html>

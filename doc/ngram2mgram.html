@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Palmkit reference --- ngram2mgram ---</title>
+</head>
+<body>
+<h1>ngram2mgram</h1>
+<h2>コマンドの解説</h2>
+長さnのID-ngramから、長さmのID-ngramを生成する。
+<h2>呼び出し形式</h2>
+<pre>
+    ngram2mgram [options] -n 長さn -m 長さm file1.idngram file2.idngram
+</pre>
+長さmは長さnより小さくなければならない。
+<h2>オプション</h2>
+<dl>
+<dt>-ascii_input <dd>入力にascii形式を使う．
+<dt>-ascii_output <dd>ascii形式で出力する．
+</dl>
+<h2>注意事項</h2>
+ngram2mgramで生成したID-ngramは、最初から長さをmとして
+text2idngramで生成したID-ngramと厳密には一致しない。その理由は、
+ngram2mgramがID-ngramの再集計を元にしているためである。
+例えば、trigramからbigramを求める場合、元となるテキストの最後が
+<pre>
+    w[n-3] w[n-2] w[n-1] w[n] &lt;/s&gt;
+</pre>
+で終っていたとすると、再集計によって求めたbigramカウントには、
+最後のw[n] &lt;/s&gt;が含まれない。これは、大量のデータを元にする場合
+には問題ないであろうが、データが多い場合には問題となるかも知れない。
+
+<h2>参照項目</h2>
+<a href="text2idngram.html">text2idngram</a>,
+<a href="ctext2idngram.html">ctext2idngram</a>
+</body>
+</html>

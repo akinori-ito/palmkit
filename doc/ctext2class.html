@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Palmkit reference --- ctext2class ---</title>
+</head>
+<body>
+<h1>ctext2class</h1>
+<h2>コマンドの解説</h2>
+クラス情報のついたテキストから、クラスの一覧を生成し、標準出力に出力する。
+<h2>呼び出し形式</h2>
+<pre>
+    ctext2class [-d delimiter] [file.text]
+</pre>
+<h2>オプション</h2>
+<dl>
+<dt> -d delimiter
+<dd>単語名とクラス名を区切る文字を指定する。デフォルトは`+'。
+</dl>
+<h2>注意事項</h2>
+引数には圧縮ファイルを指定することができない。圧縮ファイルを入力とする時は、
+<pre>
+    gunzip -d file.text.gz | ctext2class | gzip > classlist.cls.gz
+</pre>
+のようにする必要がある。
+<h2>参照項目</h2>
+<a href="ctext2idngram.html">ctext2idngram</a>
+</body>
+</html>

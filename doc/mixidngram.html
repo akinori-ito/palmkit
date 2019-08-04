@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Palmkit reference --- mixidngram ---</title>
+</head>
+<body>
+<h1>mixidngram</h1>
+<h2>コマンドの解説</h2>
+複数の<a href="manual.html#.idngram">ID n-gram</a>
+を重みつきで合算し，単独のID n-gramを標準出力に出力する．
+<h2>呼び出し形式</h2>
+<pre>
+    mixidngram [options] weight<sub>1</sub> idngram<sub>1</sub> weight<sub>2</sub> idngram<sub>2</sub> ...
+</pre>
+それぞれのidngramの出現頻度に重みを乗じる．重みは実数値であっても良いが，
+最終的な頻度の端数は切り上げられる．
+<h2>オプション</h2>
+<dl>
+<dt>-n 長さ <dd>n-gramの長さを指定する．
+<dt>-ascii_input <dd>入力にascii形式を使う．
+<dt>-ascii_output <dd>ascii形式で出力する．
+</dl>
+<h2>参照項目</h2>
+<a href="mixidngram.html">mixidngram</a>
+</body>
+</html>

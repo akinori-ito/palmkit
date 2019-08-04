@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Palmkit reference --- ctext2idngram ---</title>
+</head>
+<body>
+<h1>ctext2idngram</h1>
+<h2>コマンドの解説</h2>
+<a href="manual.html#.text">テキスト形式のデータ</a>から，
+クラス言語モデルのための
+<a href="manual.html#.idngram">ID n-gram形式のデータ</a>と
+<a href="manual.html#.idwfreq">ID wfreq形式のデータ</a>を生成する．
+<h2>呼び出し形式</h2>
+<pre>
+    ctext2idngram [option] -vocab file.vocab[.gz] -class file.cls[.gz] -idwfreq outf.idwfreq[.gz] [infile.text[.gz] [outfile.idngram[.gz]]]
+</pre>
+<p>
+-vocab で<a href="manual.html#.vocab">語彙ファイル</a>を指定し，
+-class で<a href="manual.html#.cls">クラスファイル</a>を指定する．
+計算結果のID wfreq形式データの出力先は，-idwfreqで指定する．
+infile.text, outfile.idngram を省略すると，標準入力と標準出力が
+割り当てられる．
+<h2>オプション</h2>
+<dl>
+<dt>-buffer バッファサイズ(MB)
+<dd>
+入力のソートに使うメモリサイズを指定する．デフォルトの値はコンパイル
+時に指定するが，そのままコンパイルすると100MBに設定される．
+
+<dt>-hash サイズ
+<dd>集計に用いるハッシュ表の最初の大きさを指定する．デフォルトは20000．
+
+<dt>-max_class
+<dd>クラス数の最大値を指定する．デフォルトは65000．
+
+<dt>-d デリミタ
+<dd>textファイルの中の各単語で，クラスの区切りになっている文字を指定する．
+デフォルトは``+''．
+
+<dt>-temp ディレクトリ
+<dd>
+ソートのための一時ファイルを置くディレクトリを指定する．
+
+<dt>-n 長さ
+<dd>
+生成されるn-gramの長さを指定する．デフォルトは3．
+
+<dt>-write_ascii
+<dd>バイナリでなく，テキスト形式で出力する．
+
+<dt>-one_unk
+<dd>未知語を１個のシンボルとして扱う．このオプションがない場合，
+未知語はクラスごとに別なシンボルとして扱われる．
+
+<dt>-verbosity 数字
+<dd>
+実行時に，どの程度の情報を出力するかを制御する．0を指定すると，
+余計な情報の出力をしない．デフォルトは2．
+</dl>
+
+<h2>参照項目</h2>
+<a href="wfreq2vocab.html">wfreq2vocab</a>,
+<a href="text2idngram.html">text2idngram</a>
+</body>
+</html>

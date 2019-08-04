@@ -1,0 +1,28 @@
+#!/usr/local/bin/ruby
+delimiter = "+"
+print_count = false
+
+while ARGV[0] =~ /^-/
+  case ARGV.shift
+  when "-d"
+    delimiter = ARGV.shift
+  when "-c"
+    print_count = true
+  end
+end
+
+cls = Hash.new(0)
+del = Regexp.new(".*"+Regexp.quote(delimiter))
+while gets
+  x = chop.split
+  for w in x
+    cls[w.sub(del,"")] += 1
+  end
+end
+for c,v in cls
+  if print_count then
+    print c," ",v,"\n"
+  else
+    print c,"\n"
+  end
+end

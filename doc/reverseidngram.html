@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Palmkit reference --- reverseidngram ---</title>
+</head>
+<body>
+<h1>reverseidngram</h1>
+<h2>コマンドの解説</h2>
+順方向のID-ngramから、逆方向のID-ngramを生成する。
+<h2>呼び出し形式</h2>
+<pre>
+    reverseidngram [options] infile.idngram[.gz] outfile.idngram[.gz]
+</pre>
+<h2>オプション</h2>
+<dl>
+<dt>-n 長さ <dd>n-gramの長さを指定する．
+<dt>-ascii_input <dd>入力にascii形式を使う．
+<dt>-ascii_output <dd>ascii形式で出力する．
+</dl>
+<h2>注意事項</h2>
+reverseidngramの出力は、reversewordによって各行を反転させた
+テキストから生成したID-ngramと<b>一致しない</b>。
+reverseidngramと同じID-ngramを生成するには、元のテキストの
+各行の単語の順序を入れ換えるだけでなく、行の順番も反転させ
+る必要がある。
+
+<h2>参照項目</h2>
+<a href="text2idngram.html">text2idngram</a>,
+<a href="reverseword.html">reverseword</a>
+</body>
+</html>

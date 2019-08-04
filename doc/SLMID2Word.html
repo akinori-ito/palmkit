@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Palmkit reference --- SLMWord2ID ---</title>
+</head>
+<body>
+<h1>SLMID2Word</h1>
+<h2>プロトタイプ</h2>
+<pre>
+    #include &lt;slm.h&gt;
+
+    const char *SLMID2Word(SLMNgram *ng, SLMWordID id);
+</pre>
+<h2>関数の解説</h2>
+単語番号を，単語の文字列に変換する．<tt>ng</tt>は言語モデル
+へのポインタ，<tt>id</tt>は変換したい文字列へのポインタである．
+id が 0 （未知語）の場合は "&lt;UNK&gt;"、異常な値の場合は "&lt;ERROR&gt;"
+という文字列が返される。
+
+<h2>参照項目</h2>
+<a href="SLMReadLM.html">SLMReadLM</a>
+<a href="SLMGetBOProb.html">SLMGetBOProb</a>
+<a href="SLMWord2ID.html">SLMWord2ID</a>
+</body>
+</html>

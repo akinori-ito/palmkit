@@ -1,0 +1,9 @@
+#!/usr/local/bin/ruby
+while gets
+  s = chop.split
+  c = []
+  for w in s
+    c.push(w.sub(/.*\+/,""))
+  end
+  print c.join(" "),"\n"
+end

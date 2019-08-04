@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>Palmkit reference --- text2class ---</title>
+</head>
+<body>
+<h1>text2class</h1>
+<h2>コマンドの解説</h2>
+クラス情報のついたテキストを、クラス系列に変換する
+<h2>呼び出し形式</h2>
+<pre>
+    text2class [file.text]
+</pre>
+<h2>注意事項</h2>
+引数には圧縮ファイルを指定することができない。圧縮ファイルを入力とする時は、
+<pre>
+    gunzip -d file.text.gz | text2class | gzip > file.ctext.gz
+</pre>
+のようにする必要がある。
+<h2>参照項目</h2>
+<a href="ctext2class.html">ctext2class</a>
+</body>
+</html>

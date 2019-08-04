@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Palmkit reference --- SLMWord2ID ---</title>
+</head>
+<body>
+<h1>SLMVocabSize</h1>
+<h2>プロトタイプ</h2>
+<pre>
+    #include &lt;slm.h&gt;
+
+    int SLMVocabSize(SLMNgram *ng);
+</pre>
+<h2>関数の解説</h2>
+言語モデルが保持している語彙サイズを返す。この関数が返す値をVとすると、
+未知語を含むモデルの場合、このモデルの語彙の単語番号は0からVまでになる。
+
+<h2>参照項目</h2>
+<a href="SLMReadLM.html">SLMReadLM</a>
+</body>
+</html>

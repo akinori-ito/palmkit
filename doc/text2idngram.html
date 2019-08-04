@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Palmkit reference --- text2idngram ---</title>
+</head>
+<body>
+<h1>text2idngram</h1>
+<h2>コマンドの解説</h2>
+<a href="manual.html#.text">テキスト形式のデータ</a>から，
+<a href="manual.html#.idngram">ID n-gram形式のデータ</a>を生成
+する．
+<h2>呼び出し形式</h2>
+<pre>
+    text2idngram [option] -vocab file.vocab[.gz] [infile.text[.gz] [outfile.idngram[.gz]]]
+</pre>
+<p>
+-vocab で語彙ファイルを指定する．
+<h2>オプション</h2>
+<dl>
+<dt>-buffer バッファサイズ(MB)
+<dd>
+入力のソートに使うメモリサイズを指定する．デフォルトの値はコンパイル
+時に指定するが，そのままコンパイルすると100MBに設定される．
+
+<dt>-hash サイズ
+<dd>集計に用いるハッシュ表の最初の大きさを指定する．デフォルトは20000．
+
+<dt>-temp ディレクトリ
+<dd>
+ソートのための一時ファイルを置くディレクトリを指定する．
+
+<dt>-n 長さ
+<dd>
+生成されるn-gramの長さを指定する．デフォルトは3．
+
+<dt>-d 距離
+<dd>
+distance bigramを作成する時の距離を指定する。
+-d 0 で通常のbigram と等価である。-d を指定する場合、
+同時に -n 2 を指定しなければならない。
+
+<dt>-write_ascii
+<dd>バイナリでなく，テキスト形式で出力する．
+
+<dt>-verbosity 数字
+<dd>
+実行時に，どの程度の情報を出力するかを制御する．0を指定すると，
+余計な情報の出力をしない．デフォルトは2．
+</dl>
+
+<h2>参照項目</h2>
+<a href="wfreq2vocab.html">wfreq2vocab</a>,
+<a href="ctext2idngram.html">ctext2idngram</a>
+</body>
+</html>
